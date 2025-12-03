@@ -1,95 +1,135 @@
-<!doctype html>
-
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="utf-8">
-
-  <title> YBASIN </title>
-  <link rel="shortcut icon" href="./media/YVSC_Leaf.png" type="image/x-icon" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="YBASIN: Yampa Basin Atmosphere and Soil moisture Integrated Network"> 
-  <meta name="YVSC" content="Picturedigits">
-
-  <!-- Read Tachyons CSS library-->
-  <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"/>
-
-  <!-- Read local CSS file -->
-  <link rel="stylesheet" href="./style.css"/>
-
-  <!-- Read jQuery -->
-  <script
-    src="https://code.jquery.com/jquery-3.5.1.min.js"
-    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
-    crossorigin="anonymous"></script>
-
-  <!-- Read lightbox2 -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/css/lightbox.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/js/lightbox.min.js"></script>
-
-  <!-- Read PapaParse CSV parsing library -->
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
-
-  <!-- Read Leaflet.js -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-    crossorigin=""/>
-
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
-
-  <!-- Load Material icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  <!-- Read local JavaScript files -->
-  <script src="./settings.js"></script>
-  <script src="./script.js"></script>
-
+  <title>Hex Map with Dramatic Colors</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map { height: 100vh; }
+  </style>
 </head>
+<body>
+<div id="map"></div>
 
-<body class="helvetica">
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/chroma-js@2.4.2/chroma.min.js"></script>
 
-  <div id="sidebar" class="vh-50 vh-100-ns w-100 w5-ns top-1-ns left-1-ns absolute-ns bg-white ph3 br1 ba b--black-10">
+<script>
+var map = L.map('map').setView([40.45, -106.85], 10);
 
-    <header class="pt3"> <!-- edit pathname to logo, insert alt name, adjust height-->
-      <img src="media/YBasinLogos.png" alt="YVSC, CMC, and CW3E" style="height: 40px;" />
+L.control.scale({
+    position: 'bottomleft', // choose 'bottomright' if you prefer
+    metric: false,
+    imperial: true
+}).addTo(map);
 
-      <h1 class="f3 mv2"> <!-- edit title and introductory text -->
-        YBASIN - Yampa Basin Atmosphere and Soil moisture Integrated Network
-      </h1>
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap contributors'
+}).addTo(map);
 
-      <p>
-Explore the growing network of observation stations across the Upper Yampa River Basin.
-    </header>
+// Example GeoJSON (replace with full JSON)
+var hexData = {
+  "type": "FeatureCollection",
+  "features": [
+      {"type":"Feature","id":141,"geometry":{"type":"Polygon","coordinates":[[[-106.85232189499999,40.261935900000026],[-106.85820178699998,40.272120172000029],[-106.86996157099998,40.272120172000029],[-106.87584146299997,40.261935900000026],[-106.86996157099998,40.251751629000069],[-106.85820178699998,40.251751629000069],[-106.85232189499999,40.261935900000026]]]},"properties":{"OBJECTID":141,"GRID_ID":"AE-29","Count of Points":2}},
+      {"type":"Feature","id":195,"geometry":{"type":"Polygon","coordinates":[[[-106.86996157099998,40.292488715000047],[-106.87584146299997,40.302672986000061],[-106.88760124599997,40.302672986000061],[-106.89348113799997,40.292488715000047],[-106.88760124599997,40.282304443000044],[-106.87584146299997,40.282304443000044],[-106.86996157099998,40.292488715000047]]]},"properties":{"OBJECTID":195,"GRID_ID":"AD-28","Count of Points":1}},
+      {"type":"Feature","id":250,"geometry":{"type":"Polygon","coordinates":[[[-106.86996157099998,40.312857257000076],[-106.87584146299997,40.323041529000079],[-106.88760124599997,40.323041529000079],[-106.89348113799997,40.312857257000076],[-106.88760124599997,40.302672986000061],[-106.87584146299997,40.302672986000061],[-106.86996157099998,40.312857257000076]]]},"properties":{"OBJECTID":250,"GRID_ID":"AD-27","Count of Points":2}},
+      {"type":"Feature","id":305,"geometry":{"type":"Polygon","coordinates":[[[-106.86996157099998,40.333225800000037],[-106.87584146299997,40.34341007200004],[-106.88760124599997,40.34341007200004],[-106.89348113799997,40.333225800000037],[-106.88760124599997,40.323041529000079],[-106.87584146299997,40.323041529000079],[-106.86996157099998,40.333225800000037]]]},"properties":{"OBJECTID":305,"GRID_ID":"AD-26","Count of Points":1}},
+      {"type":"Feature","id":306,"geometry":{"type":"Polygon","coordinates":[[[-106.85232189499999,40.323041529000079],[-106.85820178699998,40.333225800000037],[-106.86996157099998,40.333225800000037],[-106.87584146299997,40.323041529000079],[-106.86996157099998,40.312857257000076],[-106.85820178699998,40.312857257000076],[-106.85232189499999,40.323041529000079]]]},"properties":{"OBJECTID":306,"GRID_ID":"AE-26","Count of Points":1}},
+      {"type":"Feature","id":360,"geometry":{"type":"Polygon","coordinates":[[[-106.86996157099998,40.353594343000054],[-106.87584146299997,40.363778615000058],[-106.88760124599997,40.363778615000058],[-106.89348113799997,40.353594343000054],[-106.88760124599997,40.34341007200004],[-106.87584146299997,40.34341007200004],[-106.86996157099998,40.353594343000054]]]},"properties":{"OBJECTID":360,"GRID_ID":"AD-25","Count of Points":1}},
+      {"type":"Feature","id":361,"geometry":{"type":"Polygon","coordinates":[[[-106.85232189499999,40.34341007200004],[-106.85820178699998,40.353594343000054],[-106.86996157099998,40.353594343000054],[-106.87584146299997,40.34341007200004],[-106.86996157099998,40.333225800000037],[-106.85820178699998,40.333225800000037],[-106.85232189499999,40.34341007200004]]]},"properties":{"OBJECTID":361,"GRID_ID":"AE-25","Count of Points":1}},
+      {"type":"Feature","id":471,"geometry":{"type":"Polygon","coordinates":[[[-106.85232189499999,40.384147158000076],[-106.85820178699998,40.394331429000033],[-106.86996157099998,40.394331429000033],[-106.87584146299997,40.384147158000076],[-106.86996157099998,40.373962886000072],[-106.85820178699998,40.373962886000072],[-106.85232189499999,40.384147158000076]]]},"properties":{"OBJECTID":471,"GRID_ID":"AE-23","Shape_Length":0.070558703352058758,"Shape_Area":0.00035929449911112441,"Count of Points":1}},
+	  {"type":"Feature","id":584,"geometry":{"type":"Polygon","coordinates":[[[-106.79940286799996,40.435068515000069],[-106.80528275999995,40.445252787000072],[-106.81704254399995,40.445252787000072],[-106.82292243599994,40.435068515000069],[-106.81704254399995,40.424884244000054],[-106.80528275999995,40.424884244000054],[-106.79940286799996,40.435068515000069]]]},"properties":{"OBJECTID":584,"GRID_ID":"AH-21","Shape_Length":0.07055870335215722,"Shape_Area":0.00035929449911212708,"Count of Points":3}},
+	  {"type":"Feature","id":639,"geometry":{"type":"Polygon","coordinates":[[[-106.79940286799996,40.45543705800003],[-106.80528275999995,40.465621329000044],[-106.81704254399995,40.465621329000044],[-106.82292243599994,40.45543705800003],[-106.81704254399995,40.445252787000072],[-106.80528275999995,40.445252787000072],[-106.79940286799996,40.45543705800003]]]},"properties":{"OBJECTID":639,"GRID_ID":"AH-20","Shape_Length":0.070558701620026282,"Shape_Area":0.00035929448147163493,"Count of Points":7}},
+	  {"type":"Feature","id":640,"geometry":{"type":"Polygon","coordinates":[[[-106.78176319299996,40.445252787000072],[-106.78764308499996,40.45543705800003],[-106.79940286799996,40.45543705800003],[-106.80528275999995,40.445252787000072],[-106.79940286799996,40.435068515000069],[-106.78764308499996,40.435068515000069],[-106.78176319299996,40.445252787000072]]]},"properties":{"OBJECTID":640,"GRID_ID":"AI-20","Shape_Length":0.070558701352079908,"Shape_Area":0.00035929447874279684,"Count of Points":11}},
+	  {"type":"Feature","id":692,"geometry":{"type":"Polygon","coordinates":[[[-106.83468221999999,40.475805601000047],[-106.84056211099994,40.485989872000061],[-106.85232189499999,40.485989872000061],[-106.85820178699998,40.475805601000047],[-106.85232189499999,40.465621329000044],[-106.84056211099994,40.465621329000044],[-106.83468221999999,40.475805601000047]]]},"properties":{"OBJECTID":692,"GRID_ID":"AF-19","Shape_Length":0.070558702352224695,"Shape_Area":0.0003592944889285422,"Count of Points":1}},
+	  {"type":"Feature","id":693,"geometry":{"type":"Polygon","coordinates":[[[-106.81704254399995,40.465621329000044],[-106.82292243599994,40.475805601000047],[-106.83468221999999,40.475805601000047],[-106.84056211099994,40.465621329000044],[-106.83468221999999,40.45543705800003],[-106.82292243599994,40.45543705800003],[-106.81704254399995,40.465621329000044]]]},"properties":{"OBJECTID":693,"GRID_ID":"AG-19","Shape_Length":0.070558702352224681,"Shape_Area":0.0003592944889285422,"Count of Points":5}},
+	  {"type":"Feature","id":694,"geometry":{"type":"Polygon","coordinates":[[[-106.79940286799996,40.475805601000047],[-106.80528275999995,40.485989872000061],[-106.81704254399995,40.485989872000061],[-106.82292243599994,40.475805601000047],[-106.81704254399995,40.465621329000044],[-106.80528275999995,40.465621329000044],[-106.79940286799996,40.475805601000047]]]},"properties":{"OBJECTID":694,"GRID_ID":"AH-19","Shape_Length":0.07055870335215722,"Shape_Area":0.00035929449911212708,"Count of Points":12}},
+	  {"type":"Feature","id":695,"geometry":{"type":"Polygon","coordinates":[[[-106.78176319299996,40.465621329000044],[-106.78764308499996,40.475805601000047],[-106.79940286799996,40.475805601000047],[-106.80528275999995,40.465621329000044],[-106.79940286799996,40.45543705800003],[-106.78764308499996,40.45543705800003],[-106.78176319299996,40.465621329000044]]]},"properties":{"OBJECTID":695,"GRID_ID":"AI-19","Shape_Length":0.070558701352178371,"Shape_Area":0.00035929447874379951,"Count of Points":2}},
+	  {"type":"Feature","id":747,"geometry":{"type":"Polygon","coordinates":[[[-106.83468221999999,40.496174144000065],[-106.84056211099994,40.506358415000079],[-106.85232189499999,40.506358415000079],[-106.85820178699998,40.496174144000065],[-106.85232189499999,40.485989872000061],[-106.84056211099994,40.485989872000061],[-106.83468221999999,40.496174144000065]]]},"properties":{"OBJECTID":747,"GRID_ID":"AF-18","Shape_Length":0.070558702352224695,"Shape_Area":0.0003592944889285422,"Count of Points":7}},
+	  {"type":"Feature","id":748,"geometry":{"type":"Polygon","coordinates":[[[-106.81704254399995,40.485989872000061],[-106.82292243599994,40.496174144000065],[-106.83468221999999,40.496174144000065],[-106.84056211099994,40.485989872000061],[-106.83468221999999,40.475805601000047],[-106.82292243599994,40.475805601000047],[-106.81704254399995,40.485989872000061]]]},"properties":{"OBJECTID":748,"GRID_ID":"AG-18","Shape_Length":0.070558702352224681,"Shape_Area":0.0003592944889285422,"Count of Points":22}},
+	  {"type":"Feature","id":798,"geometry":{"type":"Polygon","coordinates":[[[-106.90524092199996,40.516542687000026],[-106.91112081399996,40.52672695800004],[-106.92288059799995,40.52672695800004],[-106.92876048999995,40.516542687000026],[-106.92288059799995,40.506358415000079],[-106.91112081399996,40.506358415000079],[-106.90524092199996,40.516542687000026]]]},"properties":{"OBJECTID":798,"GRID_ID":"AB-17","Shape_Length":0.070558703352058758,"Shape_Area":0.00035929449911112441,"Count of Points":3}},
+	  {"type":"Feature","id":799,"geometry":{"type":"Polygon","coordinates":[[[-106.88760124599997,40.506358415000079],[-106.89348113799997,40.516542687000026],[-106.90524092199996,40.516542687000026],[-106.91112081399996,40.506358415000079],[-106.90524092199996,40.496174144000065],[-106.89348113799997,40.496174144000065],[-106.88760124599997,40.506358415000079]]]},"properties":{"OBJECTID":799,"GRID_ID":"AC-17","Shape_Length":0.070558703352058758,"Shape_Area":0.00035929449911112441,"Count of Points":8}},
+	  {"type":"Feature","id":801,"geometry":{"type":"Polygon","coordinates":[[[-106.85232189499999,40.506358415000079],[-106.85820178699998,40.516542687000026],[-106.86996157099998,40.516542687000026],[-106.87584146299997,40.506358415000079],[-106.86996157099998,40.496174144000065],[-106.85820178699998,40.496174144000065],[-106.85232189499999,40.506358415000079]]]},"properties":{"OBJECTID":801,"GRID_ID":"AE-17","Shape_Length":0.070558703352058758,"Shape_Area":0.00035929449911112441,"Count of Points":1}},
+	  {"type":"Feature","id":909,"geometry":{"type":"Polygon","coordinates":[[[-106.88760124599997,40.547095501000058],[-106.89348113799997,40.557279773000062],[-106.90524092199996,40.557279773000062],[-106.91112081399996,40.547095501000058],[-106.90524092199996,40.536911230000044],[-106.89348113799997,40.536911230000044],[-106.88760124599997,40.547095501000058]]]},"properties":{"OBJECTID":909,"GRID_ID":"AC-15","Shape_Length":0.07055870335215722,"Shape_Area":0.00035929449911212708,"Count of Points":1}},
+	  {"type":"Feature","id":911,"geometry":{"type":"Polygon","coordinates":[[[-106.85232189499999,40.547095501000058],[-106.85820178699998,40.557279773000062],[-106.86996157099998,40.557279773000062],[-106.87584146299997,40.547095501000058],[-106.86996157099998,40.536911230000044],[-106.85820178699998,40.536911230000044],[-106.85232189499999,40.547095501000058]]]},"properties":{"OBJECTID":911,"GRID_ID":"AE-15","Shape_Length":0.07055870335215722,"Shape_Area":0.00035929449911212708,"Count of Points":1}},
+	  {"type":"Feature","id":913,"geometry":{"type":"Polygon","coordinates":[[[-106.81704254399995,40.547095501000058],[-106.82292243599994,40.557279773000062],[-106.83468221999999,40.557279773000062],[-106.84056211099994,40.547095501000058],[-106.83468221999999,40.536911230000044],[-106.82292243599994,40.536911230000044],[-106.81704254399995,40.547095501000058]]]},"properties":{"OBJECTID":913,"GRID_ID":"AG-15","Shape_Length":0.070558702352224681,"Shape_Area":0.0003592944889285422,"Count of Points":1}},
+	  {"type":"Feature","id":963,"geometry":{"type":"Polygon","coordinates":[[[-106.90524092199996,40.577648316000079],[-106.91112081399996,40.587832587000037],[-106.92288059799995,40.587832587000037],[-106.92876048999995,40.577648316000079],[-106.92288059799995,40.567464044000076],[-106.91112081399996,40.567464044000076],[-106.90524092199996,40.577648316000079]]]},"properties":{"OBJECTID":963,"GRID_ID":"AB-14","Shape_Length":0.070558703352058758,"Shape_Area":0.00035929449911112441,"Count of Points":1}},
+	  {"type":"Feature","id":964,"geometry":{"type":"Polygon","coordinates":[[[-106.88760124599997,40.567464044000076],[-106.89348113799997,40.577648316000079],[-106.90524092199996,40.577648316000079],[-106.91112081399996,40.567464044000076],[-106.90524092199996,40.557279773000062],[-106.89348113799997,40.557279773000062],[-106.88760124599997,40.567464044000076]]]},"properties":{"OBJECTID":964,"GRID_ID":"AC-14","Shape_Length":0.07055870335215722,"Shape_Area":0.00035929449911212708,"Count of Points":1}},
+	  {"type":"Feature","id":1124,"geometry":{"type":"Polygon","coordinates":[[[-106.97579962499998,40.63875394400003],[-106.98167951599999,40.648938216000033],[-106.99343929999998,40.648938216000033],[-106.99931919199997,40.63875394400003],[-106.99343929999998,40.628569673000072],[-106.98167951599999,40.628569673000072],[-106.97579962499998,40.63875394400003]]]},"properties":{"OBJECTID":1124,"GRID_ID":"X-11","Shape_Length":0.070558702352069388,"Shape_Area":0.00035929448892696062,"Count of Points":1}},
+	  {"type":"Feature","id":1622,"geometry":{"type":"Polygon","coordinates":[[[-106.92288059799995,40.811886559000072],[-106.92876048999995,40.822070831000076],[-106.94052027299995,40.822070831000076],[-106.94640016499994,40.811886559000072],[-106.94052027299995,40.801702288000058],[-106.92876048999995,40.801702288000058],[-106.92288059799995,40.811886559000072]]]},"properties":{"OBJECTID":1622,"GRID_ID":"AA-2","Shape_Length":0.070558701352178371,"Shape_Area":0.00035929447874379951,"Count of Points":1}}
+    ]
+};
 
-    <article id="placeInfo" class="dn">
+// Get unique counts
+var counts = [...new Set(hexData.features.map(f => f.properties["Count of Points"]))];
+counts.sort((a,b) => a-b);
 
-      <span id="closeButton" class="material-icons db fr black-40 dim" style="cursor: pointer">close</span>
+// Create a dramatic color palette (light to dark green)
+var colorPalette = chroma.scale(['#b7e4c7','#1b4332']).colors(counts.length); 
 
-      <h2 class="f4 mv1"></h2>
-      <h3 class="f5 black-60 mv1"></h3>
+// Map each count to a color
+var countToColor = {};
+counts.forEach((count, i) => {
+  countToColor[count] = colorPalette[i];
+});
 
-      <div id="gallery"></div>
+L.geoJSON(hexData, {
+  style: function(feature) {
+    return {
+      color: "#333",
+      weight: 1,
+      fillOpacity: 0.8,
+      fillColor: countToColor[feature.properties["Count of Points"]]
+    };
+  },
+  onEachFeature: function(feature, layer) {
+    // Use OBJECTID (or any unique ID) to select images
+    const id = feature.properties.OBJECTID;
 
-      <div id="description"></div>
+    const imageMap = {
+      141: ["images/141_BarbaraFox_Front2025.jpg"],
+      250: ["images/250_KathyLaurini_2025.jpg"],
+      748: [
+        "images/748_6MissouriAve.jpg",
+        "images/748_6MissouriAve1.jpg",
+        "images/748_6MissouriAve2.jpg",
+        "images/748_6MissouriAve3.jpg",
+        "images/748_Kimball_1160TheBoulevard.jpg",
+        "images/748_Kimball_1160TheBoulevard1.jpg",
+        "images/748_Kimball_1160TheBoulevard2.jpg",
+        "images/748_Kimball_1160TheBoulevard3.jpg",
+        "images/748_Kimball_1160TheBoulevard4.jpg",
+        "images/748_Kimball_1160TheBoulevard5.jpg",
+        "images/748_Kimball_1160TheBoulevard6.jpg"
+      ],
+      799: ["images/964_MichelleStewart_2025.jpg"],
+      964: ["images/pic195.jpg"]
+      // ... add more mappings here
+    };
 
-      <a id="googleMaps" class="shadow-1 mv3 pa3 dn" href="" target="_blank">
-        <span class="material-icons dtc v-mid pa2 pr3">location_on</span>
-        <span class="dtc v-mid">Click here to view site data</span>
-      </a>
+    // Get the images for this hex, or default
+    const images = imageMap[id] || ["images/default.jpg"];
 
-    </article>
+    // Build HTML for all images inside a scrollable container
+    let imgHtml = '<div style="max-height:200px; overflow-y:auto;">';
+    images.forEach(img => {
+      imgHtml += `<img src="${img}" alt="Hex image" width="150" style="margin:2px; display:block;" />`;
+    });
+    imgHtml += '</div>';
 
-    <footer class="black-50 f6 pv3">
-    <a href="https://yvsc.org/soil-moisture-monitoring-network/" target="_blank">Click here to learn more about YBasin</a>
-    </footer>
+// show count and images in popup
+const popupContent = `
+  <p>Count: ${feature.properties["Count of Points"]}</p>
+  ${imgHtml}
+`;
 
-  </div>
 
-  <!-- Map container -->
-  <div id="map" class="vh-50 vh-100-ns vw-100"></div>
-
+    // Bind the popup to the hex layer
+    layer.bindPopup(popupContent);
+  }
+}).addTo(map);
+</script>
 </body>
-
 </html>
