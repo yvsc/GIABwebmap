@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Hex Map with Dramatic Colors</title>
+  <title>Garden In A Box Steamboat Springs</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -27,6 +27,7 @@ L.control.scale({
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenStreetMap contributors'
 }).addTo(map);
+L.control.scale() .addTo (mymap);
 
 // Example GeoJSON (replace with full JSON)
 var hexData = {
