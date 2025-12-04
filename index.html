@@ -28,6 +28,21 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 L.control.scale() .addTo (mymap);
+var info = L.control();
+
+	info.onAdd = function (map) {
+		this._div = L.DomUtil.create('div', 'info');
+		this.update();
+		return this._div;
+	};
+
+	info.update = function (props) {
+		this._div.innerHTML = '<center><h4>Garden In A Box locations Steamboat Springs, Colorado</h4>';
+	};
+
+	info.addTo(mymap);
+
+
 
 // Example GeoJSON (replace with full JSON)
 var hexData = {
