@@ -256,6 +256,7 @@ var initMap = function() {
 
   // Add custom `home` control
   addHomeButton();
+	L.control.scale().addTo(mymap);
 
   $('#closeButton').on('click', resetView);
 }
