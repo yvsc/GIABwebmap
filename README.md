@@ -5,7 +5,7 @@ Leaflet Point Map with Sidebar with Google Sheets -- Best to display points as c
 
 ## Live links (replace with your own)
 
-Demo map: https://handsondataviz.github.io/leaflet-point-map-sidebar/
+Demo map: https://yvsc.github.io/GIABwebmap/
 
 Google Sheet: https://docs.google.com/spreadsheets/d/e/2PACX-1vSI2bs4Jxow-H2twmzRAnDiySG9thbUGxeuwENwfc70eiK9VIHtAXrVCMrnw1xUnDaLxpZzp3-ukEOg/pub?output=csv
 
