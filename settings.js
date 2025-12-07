@@ -2,7 +2,7 @@
 // or a Google Sheets URL (File > Publishconst dataLocatio to the Web > CSV )
 const dataLocation = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSI2bs4Jxow-H2twmzRAnDiySG9thbUGxeuwENwfc70eiK9VIHtAXrVCMrnw1xUnDaLxpZzp3-ukEOg/pub?output=csv';
 // Map's initial center, and zoom level
-const mapCenter = [40.511, -107.290]; 
+const mapCenter = [50.511, -107.290]; 
 const mapZoom = 9;
 const maxZoomLevel = 9; 
 
